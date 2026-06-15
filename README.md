@@ -41,8 +41,17 @@ npm start          # dev server at http://localhost:3000
 
 ## Build & Deploy
 
+Hosted on **Vercel** — every push to `main` triggers an automatic production
+deploy (framework preset: Create React App). SPA routing is handled by
+`vercel.json`, so no manual step is needed.
+
 ```bash
-npm run build      # production build into /build
+npm run build      # local production build into /build
+```
+
+GitHub Pages remains available as a fallback:
+
+```bash
 npm run deploy     # build + publish to the gh-pages branch
 ```
 
