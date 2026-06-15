@@ -1,51 +1,73 @@
 <h2 align="center">
-  Portfolio Website<br/>
-  <a href="https://andrewzho.github.io/" target="_blank">andrewzho.github.io/</a>
+  Andrew Ho — Portfolio<br/>
+  <a href="https://andrewzho.github.io/" target="_blank">andrewzho.github.io</a>
 </h2>
+
 <div align="center">
-  <img alt="Demo" src="./Images/sample_image.png" />
+  <img alt="Andrew Ho portfolio — dark minimal hero" src="./Images/sample_image.png" />
 </div>
 
 <br/>
 
-<center>
+<p align="center">
+  My personal portfolio — a dark, minimal, single-page site with a few subtle
+  touches of motion (cursor spotlight, drifting grid, scroll reveals, tilt cards).
+</p>
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) &nbsp;
-![GitHub Repo stars](https://img.shields.io/github/stars/andrewzho/andrewzho.github.io?color=red&logo=github&style=for-the-badge) &nbsp;
-![GitHub forks](https://img.shields.io/github/forks/andrewzho/andrewzho.github.io?color=red&logo=github&style=for-the-badge)
+<p align="center">
+  <a href="https://github.com/andrewzho/andrewzho.github.io/issues">Report Bug</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/andrewzho/andrewzho.github.io/issues">Request Feature</a>
+</p>
 
-</center>
+## Tech Stack
 
-<h3 align="center">
-    🔹
-    <a href="https://github.com/andrewzho/andrewzho.github.io/issues">Report Bug</a> &nbsp; &nbsp;
-    🔹
-    <a href="https://github.com/andrewzho/andrewzho.github.io/issues">Request Feature</a>
-</h3>
+- **React 17** (Create React App)
+- **React Router v6** — Home (single-page scroll) + a Résumé route
+- **typewriter-effect** — rotating role line in the hero
+- **react-pdf** — renders the résumé PDF inline (`src/Assets/Resume.pdf`)
+- **Custom CSS** design system (`src/style.css`) — no UI framework; the look is
+  hand-rolled (Archivo + Space Grotesk, monochrome OLED palette)
+- **GitHub Pages** — hosting, deployed via `gh-pages`
 
-## Built With
+## Run Locally
 
-My personal portfolio <a href="https://andrewzho.github.io/" target="_blank">andrewzho.github.io</a> which features some of my github projects as well as my resume and technical skills.<br/>
+```bash
+git clone https://github.com/andrewzho/andrewzho.github.io.git
+cd andrewzho.github.io
+npm install
+npm start          # dev server at http://localhost:3000
+```
 
-This project was built using these technologies.
+## Build & Deploy
 
-- React.js
-- Node.js
-- Express.js
-- CSS3
-- VsCode
-- Vercel
+```bash
+npm run build      # production build into /build
+npm run deploy     # build + publish to the gh-pages branch
+```
 
-## Features
+`npm run deploy` runs the `predeploy` step first, which builds the app and copies
+`build/index.html` to `build/404.html`. This is what lets GitHub Pages serve the
+single-page app correctly when someone navigates directly to a client-side route
+(e.g. `/resume`) — Pages returns the 404 page, which is really the app, and React
+Router takes over from there.
 
-**📖 Multi-Page Layout**
+## Structure
 
-**🎨 Styled with React-Bootstrap and Css with easy to customize colors**
-
-**📱 Fully Responsive**
+```
+src/
+├── App.js                    # routes (/ and /resume) + global layers
+├── style.css                 # the whole design system
+├── components/
+│   ├── Ambient.js            # cursor spotlight, drifting grid, grain, scroll-reveal
+│   ├── Navbar.js             # sticky nav with section scrolling
+│   ├── Footer.js             # "Let's talk" contact section
+│   ├── Home/                 # single-page scroll: hero, work, currently, life
+│   └── Resume/               # inline PDF viewer + download
+└── Assets/                   # Resume.pdf, favicon, etc.
+```
 
 ## Credit
 
-I was able to create this portfolio from the help of [Soumyajit4419's Portfolio](https://github.com/soumyajit4419/Portfolio)
+Originally bootstrapped from [Soumyajit4419's Portfolio](https://github.com/soumyajit4419/Portfolio);
+the current design and content are my own.
