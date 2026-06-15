@@ -12,7 +12,7 @@ npm run deploy   # build + copy index.html → 404.html (GitHub Pages SPA fallba
 
 ## Architecture
 
-Single-page React app (Create React App, React 17) deployed to GitHub Pages at `andrewzho.github.io`. No UI framework — the entire look is a hand-rolled CSS design system. Dark, minimal, monochrome ("OLED Lively"): Archivo + Space Grotesk, with subtle motion.
+Single-page React app (Create React App, React 17) hosted on Vercel at `andrewzho.dev` (auto-deploys on push to `main`). No UI framework — the entire look is a hand-rolled CSS design system. Dark, minimal, monochrome ("OLED Lively"): Archivo + Space Grotesk, with subtle motion.
 
 **Routing** (`src/App.js`): React Router v6 with two routes — `/` (Home, a single-page scroller) and `/resume` (inline PDF viewer). Any unknown path redirects to `/`.
 
@@ -41,4 +41,6 @@ When adding a section that should animate in, give its wrapper the `reveal` clas
 
 ## Deployment note
 
-The `predeploy` script copies `build/index.html` → `build/404.html` so GitHub Pages serves the SPA correctly on direct navigation to a client-side route (e.g. `/resume`): Pages returns the 404 page, which is really the app, and React Router takes over.
+Primary hosting is **Vercel** at `andrewzho.dev` — pushing to `main` triggers an automatic production deploy. SPA routing is handled by `vercel.json` (rewrites everything to `index.html`), so direct navigation to `/resume` works.
+
+GitHub Pages remains as a fallback via `npm run deploy`: its `predeploy` step copies `build/index.html` → `build/404.html` so Pages serves the SPA correctly on direct route navigation (it returns the 404 page, which is really the app, and React Router takes over).
