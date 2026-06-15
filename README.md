@@ -1,6 +1,6 @@
 <h2 align="center">
   Andrew Ho — Portfolio<br/>
-  <a href="https://andrewzho.github.io/" target="_blank">andrewzho.github.io</a>
+  <a href="https://andrewzho.dev/" target="_blank">andrewzho.dev</a>
 </h2>
 
 <div align="center">
