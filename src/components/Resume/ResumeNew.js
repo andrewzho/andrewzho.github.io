@@ -1,55 +1,61 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Particle from "../Particle";
-import pdf from "../../Assets/../Assets/Resume.pdf";
-import { AiOutlineDownload } from "react-icons/ai";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+import pdf from "../../Assets/Resume.pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 function ResumeNew() {
   const [width, setWidth] = useState(1200);
 
   useEffect(() => {
     setWidth(window.innerWidth);
+    const onResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  const scale = width > 900 ? 1.6 : width > 600 ? 1.0 : 0.62;
+
   return (
-    <div>
-      <Container fluid className="resume-section">
-        <Particle />
-        <Row style={{ justifyContent: "center", position: "relative" }}>
-          <Button
-            variant="primary"
+    <main className="resume-page">
+      <div className="wrap">
+        <div className="sec-head reveal">
+          <h2>Résumé</h2>
+          <div className="idx">PDF · 1 page</div>
+        </div>
+
+        <div className="resume-actions">
+          <a
+            className="btn"
             href={pdf}
             target="_blank"
-            style={{ maxWidth: "250px" }}
+            rel="noopener noreferrer"
+            download="Andrew_Ho_Resume.pdf"
           >
-            <AiOutlineDownload />
-            &nbsp;Download CV
-          </Button>
-        </Row>
+            Download CV
+          </a>
+          <a className="btn ghost" href={pdf} target="_blank" rel="noopener noreferrer">
+            Open in new tab
+          </a>
+        </div>
 
-        <Row className="resume">
-          <Document file={pdf} className="d-flex justify-content-center">
-            <Page pageNumber={1} scale={width > 786 ? 1.7 : 0.6} />
+        <div className="resume-doc">
+          <Document
+            file={pdf}
+            loading={<div className="resume-loading">Loading résumé…</div>}
+            error={<div className="resume-loading">Couldn&rsquo;t load the PDF — try the download button above.</div>}
+          >
+            <Page
+              pageNumber={1}
+              scale={scale}
+              renderTextLayer={false}
+              renderAnnotationLayer={false}
+            />
           </Document>
-        </Row>
-
-        <Row style={{ justifyContent: "center", position: "relative" }}>
-          <Button
-            variant="primary"
-            href={pdf}
-            target="_blank"
-            style={{ maxWidth: "250px" }}
-          >
-            <AiOutlineDownload />
-            &nbsp;Download CV
-          </Button>
-        </Row>
-      </Container>
-    </div>
+        </div>
+      </div>
+    </main>
   );
 }
 

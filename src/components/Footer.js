@@ -1,70 +1,30 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import {
-  AiFillGithub,
-  AiOutlineTwitter,
-  AiFillInstagram,
-} from "react-icons/ai";
-import { FaLinkedinIn } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function Footer() {
-  let date = new Date();
-  let year = date.getFullYear();
   return (
-    <Container fluid className="footer">
-      <Row>
-        <Col md="4" className="footer-copywright">
-          <h3>Designed and Developed by Andrew Ho</h3>
-        </Col>
-        <Col md="4" className="footer-copywright">
-          <h3>Copyright © {year} AZH</h3>
-        </Col>
-        <Col md="4" className="footer-body">
-          <ul className="footer-icons">
-            <li className="social-icons">
-              <a
-                href="https://github.com/andrewzho"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <AiFillGithub />
-              </a>
-            </li>
-            <li className="social-icons">
-              <a
-                href="https://twitter.com/andrewho27"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <AiOutlineTwitter />
-              </a>
-            </li>
-            <li className="social-icons">
-              <a
-                href="https://www.linkedin.com/in/andrewzho/"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <FaLinkedinIn />
-              </a>
-            </li>
-            <li className="social-icons">
-              <a
-                href="https://www.instagram.com/andrewho27"
-                style={{ color: "white" }}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <AiFillInstagram />
-              </a>
-            </li>
-          </ul>
-        </Col>
-      </Row>
-    </Container>
+    <footer id="contact">
+      <div className="wrap">
+        <div className="foot-grid reveal">
+          <h2>Let&rsquo;s talk.</h2>
+          <div className="foot-links">
+            <a href="mailto:andrewzho2003@gmail.com">Email</a>
+            <a href="https://github.com/andrewzho" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/andrewzho"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+            <Link to="/resume">Résumé</Link>
+          </div>
+        </div>
+        <div className="copy">© 2026 Andrew Ho · Built in the dark</div>
+      </div>
+    </footer>
   );
 }
 
