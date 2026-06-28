@@ -79,6 +79,14 @@ nav{position:sticky;top:0;z-index:50;background:rgba(7,7,8,.6);backdrop-filter:b
 .btn.ghost{border-color:var(--line-hi)}
 .btn.ghost::before{background:#fff}
 
+/* staggered hero entrance on load */
+@keyframes heroIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero .eyebrow{animation:heroIn .7s cubic-bezier(.2,.7,.2,1) both}
+.hero .display{animation:heroIn .7s cubic-bezier(.2,.7,.2,1) .08s both}
+.hero .role{animation:heroIn .7s cubic-bezier(.2,.7,.2,1) .16s both}
+.hero .lead{animation:heroIn .7s cubic-bezier(.2,.7,.2,1) .24s both}
+.hero .btn-row{animation:heroIn .7s cubic-bezier(.2,.7,.2,1) .32s both}
+
 /* ---------- marquee ---------- */
 .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .marquee .track{display:inline-block;animation:scroll 26s linear infinite}
