@@ -21,6 +21,18 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
 
 /* ---------- ambient layers ---------- */
+/* monochrome aurora — adapted (vanilla, no deps) from 21st.dev "Aurora Background" */
+.aurora{position:fixed;top:0;left:0;right:0;height:80vh;z-index:0;pointer-events:none;
+  opacity:.6;
+  background:repeating-linear-gradient(100deg,
+    rgba(255,255,255,.06) 0%, rgba(255,255,255,.06) 7%,
+    transparent 10%, transparent 12%, rgba(255,255,255,.06) 16%);
+  background-size:220% 220%;
+  filter:blur(40px);
+  -webkit-mask-image:radial-gradient(ellipse 75% 55% at 50% 0%, #000 0%, transparent 78%);
+  mask-image:radial-gradient(ellipse 75% 55% at 50% 0%, #000 0%, transparent 78%);
+  animation:aurora 20s linear infinite}
+@keyframes aurora{from{background-position:0% 0%}to{background-position:220% 0%}}
 .grid-bg{position:fixed;inset:-50% 0;z-index:0;pointer-events:none;
   background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
   background-size:64px 64px;opacity:.35;
@@ -151,6 +163,6 @@ footer{border-top:1px solid var(--line);padding:90px 0 70px;position:relative}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
-  .grid-bg,.spot,.grain{display:none}
+  .grid-bg,.spot,.grain,.aurora{display:none}
   html{scroll-behavior:auto}
 }
