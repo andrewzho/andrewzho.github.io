@@ -39,6 +39,19 @@ const reduced =
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Subtle magnetic pull toward the cursor (hero CTAs)
+function onMagnet(e) {
+  if (reduced) return;
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  const mx = e.clientX - (r.left + r.width / 2);
+  const my = e.clientY - (r.top + r.height / 2);
+  el.style.transform = `translate(${mx * 0.25}px, ${my * 0.35}px)`;
+}
+function onMagnetLeave(e) {
+  e.currentTarget.style.transform = "";
+}
+
 function ProjectCard({ num, title, desc, tags, href }) {
   const onMove = (e) => {
     if (reduced) return;
@@ -106,6 +119,8 @@ function Home() {
             <a
               className="btn"
               href="#work"
+              onPointerMove={onMagnet}
+              onPointerLeave={onMagnetLeave}
               onClick={(e) => {
                 e.preventDefault();
                 document
@@ -121,6 +136,8 @@ function Home() {
               target="_blank"
               rel="noopener noreferrer"
               download="Andrew_Ho_Resume.pdf"
+              onPointerMove={onMagnet}
+              onPointerLeave={onMagnetLeave}
             >
               Download CV
             </a>
