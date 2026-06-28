@@ -65,6 +65,7 @@ function Ambient() {
 
   return (
     <>
+      <div className="aurora" />
       <div className="grid-bg" />
       <div className="spot" ref={spotRef} />
       <div className="grain" />
