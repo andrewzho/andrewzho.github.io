@@ -35,8 +35,8 @@ function NavBar() {
           Andrew Ho
         </Link>
         <div className="nav-links">
+          <SectionLink id="exp" label="Experience" />
           <SectionLink id="work" label="Work" />
-          <SectionLink id="now" label="Now" />
           <SectionLink id="life" label="Life" />
           <Link to="/resume">Résumé</Link>
           <SectionLink id="contact" label="Contact" />

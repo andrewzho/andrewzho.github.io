@@ -1,6 +1,10 @@
 import React from "react";
 import Type from "./Type";
+import Stats from "./Stats";
+import Experience from "./Experience";
 import pdf from "../../Assets/Resume.pdf";
+import neuroflow from "../../Assets/Projects/neuroflow.jpg";
+import bucketlist from "../../Assets/Projects/bucketlist.jpg";
 
 const NAME = "Andrew Ho";
 
@@ -11,25 +15,27 @@ const MARQUEE = [
 
 const PROJECTS = [
   {
-    num: "01",
     title: "NeuroFlow",
     desc:
-      "Calculates stress level from blood flow — a scalable way to gather biological data and correlate it to a quantitative stress metric derived from Heart Rate Variability.",
-    tags: ["React", "FastAPI", "OpenAI", "PostgreSQL", "Neurokit2"],
-    href: "https://github.com/andrewzho/NeuroFlow",
+      "Calculates stress level from blood flow — gathering biological data and correlating it to a quantitative stress metric derived from Heart Rate Variability.",
+    tags: ["React", "FastAPI", "OpenAI", "PostgreSQL"],
+    img: neuroflow,
+    code: "https://github.com/andrewzho/NeuroFlow",
+    demo: "https://devpost.com/software/neuroflow",
   },
   {
-    num: "02",
     title: "BucketList",
     desc:
-      "Flight finder based on personal preference. Build bucketlists and get automatic notifications about the most affordable flights for your dream trips.",
+      "Flight finder based on personal preference. Build bucketlists and get automatic alerts about the most affordable flights for your dream trips.",
     tags: ["React", "Fetch.AI", "OpenAI", "MongoDB"],
-    href: "https://github.com/andrewzho/BucketList-AI",
+    img: bucketlist,
+    code: "https://github.com/andrewzho/BucketList-AI",
+    demo: "https://devpost.com/software/bucketlist-ai",
   },
 ];
 
 const NOW = [
-  { k: "Playing", b: "Super Mario Galaxy 2", s: "Going for 100%" },
+  { k: "Playing", b: "Dave the Diver", s: "Dives by day, sushi bar by night" },
   { k: "Watching", b: "One Piece", s: "Catching up on the saga" },
   { k: "Training", b: "UL PPL", s: "Upper / Lower · Push / Pull / Legs" },
   { k: "Working from", b: "A café in Seattle", s: "Cold brew, any seat" },
@@ -39,56 +45,53 @@ const reduced =
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Subtle magnetic pull toward the cursor (hero CTAs)
 function onMagnet(e) {
   if (reduced) return;
   const el = e.currentTarget;
   const r = el.getBoundingClientRect();
-  const mx = e.clientX - (r.left + r.width / 2);
-  const my = e.clientY - (r.top + r.height / 2);
-  el.style.transform = `translate(${mx * 0.25}px, ${my * 0.35}px)`;
+  el.style.transform = `translate(${(e.clientX - (r.left + r.width / 2)) * 0.25}px, ${
+    (e.clientY - (r.top + r.height / 2)) * 0.35
+  }px)`;
 }
 function onMagnetLeave(e) {
   e.currentTarget.style.transform = "";
 }
 
-function ProjectCard({ num, title, desc, tags, href }) {
-  const onMove = (e) => {
-    if (reduced) return;
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width;
-    const py = (e.clientY - r.top) / r.height;
-    el.style.transform = `perspective(800px) rotateY(${(px - 0.5) * 6}deg) rotateX(${(0.5 - py) * 6}deg)`;
-    el.style.setProperty("--mx", px * 100 + "%");
-    el.style.setProperty("--my", py * 100 + "%");
-  };
-  const onLeave = (e) => {
-    e.currentTarget.style.transform = "";
-  };
+function onTilt(e) {
+  if (reduced) return;
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width;
+  const py = (e.clientY - r.top) / r.height;
+  el.style.transform = `rotateY(${(px - 0.5) * 12}deg) rotateX(${(0.5 - py) * 12}deg)`;
+}
+function onTiltLeave(e) {
+  e.currentTarget.style.transform = "";
+}
+
+function Project({ title, desc, tags, img, code, demo, flip }) {
   return (
-    <a
-      className="card reveal"
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-    >
-      <div className="ptop">
-        <span className="pnum">{num}</span>
-        <span className="arrow">↗</span>
+    <div className={"proj parallax" + (flip ? " flip" : "")}>
+      <div className="pmeta">
+        <h3>{title}</h3>
+        <p>{desc}</p>
+        <div className="stack">
+          {tags.map((t) => (
+            <span className="tag" key={t}>{t}</span>
+          ))}
+        </div>
+        <div className="plinks">
+          <a href={code} target="_blank" rel="noopener noreferrer">Code ↗</a>
+          <a href={demo} target="_blank" rel="noopener noreferrer">Devpost ↗</a>
+        </div>
       </div>
-      <h3>{title}</h3>
-      <p>{desc}</p>
-      <div className="stack">
-        {tags.map((t) => (
-          <span className="tag" key={t}>
-            {t}
-          </span>
-        ))}
+      <div className="frame">
+        <div className="window tilt" onPointerMove={onTilt} onPointerLeave={onTiltLeave}>
+          <div className="bar"><i /><i /><i /></div>
+          <img src={img} alt={`${title} screenshot`} loading="lazy" />
+        </div>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -111,9 +114,9 @@ function Home() {
             <span className="pre">I&rsquo;m a</span> <Type />
           </div>
           <p className="lead">
-            UC Irvine CS grad specializing in Intelligent Systems. I build
-            full-stack products, work with data, and keep up with whatever&rsquo;s
-            new in AI — currently a Software Engineer in Seattle.
+            UC Irvine CS grad shipping production systems at Capital Group. I care
+            about how the pieces fit together, why they break, and getting them
+            reliably to people — big picture over busywork.
           </p>
           <div className="btn-row">
             <a
@@ -123,12 +126,10 @@ function Home() {
               onPointerLeave={onMagnetLeave}
               onClick={(e) => {
                 e.preventDefault();
-                document
-                  .getElementById("work")
-                  ?.scrollIntoView({ behavior: "smooth" });
+                document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
               }}
             >
-              View work
+              See the work
             </a>
             <a
               className="btn ghost"
@@ -150,27 +151,29 @@ function Home() {
         <div className="track">
           {[...MARQUEE, ...MARQUEE].map((s, i) => (
             <React.Fragment key={i}>
-              <span>
-                <b>{s}</b>
-              </span>
+              <span><b>{s}</b></span>
               <span>·</span>
             </React.Fragment>
           ))}
         </div>
       </div>
 
+      {/* stats */}
+      <Stats />
+
+      {/* experience */}
+      <Experience />
+
       {/* work */}
       <section className="sec" id="work">
         <div className="wrap">
           <div className="sec-head reveal">
             <h2>Selected Work</h2>
-            <div className="idx">01 — Projects</div>
+            <div className="idx">02 — Projects</div>
           </div>
-          <div className="projects">
-            {PROJECTS.map((p) => (
-              <ProjectCard key={p.title} {...p} />
-            ))}
-          </div>
+          {PROJECTS.map((p, i) => (
+            <Project key={p.title} {...p} flip={i % 2 === 1} />
+          ))}
         </div>
       </section>
 
@@ -179,15 +182,12 @@ function Home() {
         <div className="wrap">
           <div className="sec-head reveal">
             <h2>Currently</h2>
-            <div className="idx">02 — Now</div>
+            <div className="idx">03 — Now</div>
           </div>
           <div className="now">
             {NOW.map((item) => (
-              <div className="item reveal" key={item.k}>
-                <div className="k">
-                  <span className="live" />
-                  {item.k}
-                </div>
+              <div className="item parallax" key={item.k}>
+                <div className="k"><span className="live" />{item.k}</div>
                 <b>{item.b}</b>
                 <small>{item.s}</small>
               </div>
@@ -201,77 +201,32 @@ function Home() {
         <div className="wrap">
           <div className="sec-head reveal">
             <h2>Off the clock</h2>
-            <div className="idx">03 — Life</div>
+            <div className="idx">04 — Life</div>
           </div>
           <div className="life">
-            <div className="tile reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M6 12h4M8 10v4" />
-                <circle cx="16" cy="11" r="1" />
-                <circle cx="18" cy="13" r="1" />
-                <rect x="2" y="6" width="20" height="12" rx="4" />
-              </svg>
-              <div>
-                <b>Gaming with friends</b>
-                <br />
-                <small>Co-op &amp; couch sessions</small>
-              </div>
+            <div className="tile parallax">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M10 9l4 2.5-4 2.5z" fill="currentColor" stroke="none"/><path d="M8 21h8"/></svg>
+              <div><b>Anime</b><br /><small>always one series deep</small></div>
             </div>
-            <div className="tile reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M6.5 6.5l11 11M3 9l3-3M21 15l-3 3M4 13l7-7 7 7-7 7z" />
-                <path d="M2 12l4 4M18 6l4 4" />
-              </svg>
-              <div>
-                <b>The gym</b>
-                <br />
-                <small>Lifting most days</small>
-              </div>
+            <div className="tile parallax">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.5 5.5c3 3 3 10 0 13M18.5 5.5c-3 3-3 10 0 13"/></svg>
+              <div><b>Knicks basketball</b><br /><small>orange &amp; blue forever</small></div>
             </div>
-            <div className="tile reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 3a9 9 0 0 1 0 18M3 12c4 0 7-3 9-9M21 12c-4 0-7 3-9 9" />
-              </svg>
-              <div>
-                <b>Volleyball</b>
-                <br />
-                <small>Weekend pickup</small>
-              </div>
+            <div className="tile parallax">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3c3 4 5 6 5 9a5 5 0 0 1-10 0c0-3 2-5 5-9z"/><path d="M9.5 14a2.5 2.5 0 0 0 5 0"/></svg>
+              <div><b>Victini</b><br /><small>the victory pokémon</small></div>
             </div>
-            <div className="tile reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <rect x="2" y="4" width="20" height="14" rx="2" />
-                <path d="M10 9l4 2.5-4 2.5z" fill="currentColor" stroke="none" />
-                <path d="M8 21h8" />
-              </svg>
-              <div>
-                <b>Watching shows</b>
-                <br />
-                <small>One Piece &amp; beyond</small>
-              </div>
+            <div className="tile parallax">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M6 12h4M8 10v4"/><circle cx="16" cy="11" r="1"/><circle cx="18" cy="13" r="1"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+              <div><b>Gaming with friends</b><br /><small>co-op &amp; couch sessions</small></div>
             </div>
-            <div className="tile reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <polyline points="16 18 22 12 16 6" />
-                <polyline points="8 6 2 12 8 18" />
-              </svg>
-              <div>
-                <b>Side projects</b>
-                <br />
-                <small>Always building something</small>
-              </div>
+            <div className="tile parallax">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M6.5 6.5l11 11M3 9l3-3M21 15l-3 3M4 13l7-7 7 7-7 7z"/><path d="M2 12l4 4M18 6l4 4"/></svg>
+              <div><b>The gym</b><br /><small>lifting most days</small></div>
             </div>
-            <div className="tile reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M12 3l1.7 4.8L18.5 9l-4.8 1.2L12 15l-1.7-4.8L5.5 9l4.8-1.2z" />
-                <path d="M19 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z" />
-              </svg>
-              <div>
-                <b>Exploring AI</b>
-                <br />
-                <small>Whatever&rsquo;s new this week</small>
-              </div>
+            <div className="tile parallax">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 8h13v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M17 9h2a2 2 0 0 1 0 4h-2"/><path d="M8 2v2M12 2v2"/></svg>
+              <div><b>Cafés</b><br /><small>cold brew, any seat</small></div>
             </div>
           </div>
         </div>
