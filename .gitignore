@@ -27,3 +27,6 @@ yarn-error.log*
 
 Server/node_modules
 Server/config.js
+
+# local design exploration / mockups (kept local, not deployed)
+/demos
