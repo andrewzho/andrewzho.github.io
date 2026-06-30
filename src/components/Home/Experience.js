@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ScrollText from "../ScrollText";
 
 const ROLES = [
   {
@@ -46,7 +47,7 @@ function Experience() {
     <section className="sec" id="exp">
       <div className="wrap">
         <div className="sec-head reveal">
-          <h2>Experience</h2>
+          <ScrollText as="h2">Experience</ScrollText>
           <div className="idx">01 — Where I&rsquo;ve built</div>
         </div>
         <div className="exp parallax">
