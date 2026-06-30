@@ -2,6 +2,7 @@ import React from "react";
 import Type from "./Type";
 import Stats from "./Stats";
 import Experience from "./Experience";
+import ScrollText from "../ScrollText";
 import pdf from "../../Assets/Resume.pdf";
 import neuroflow from "../../Assets/Projects/neuroflow.jpg";
 import bucketlist from "../../Assets/Projects/bucketlist.jpg";
@@ -179,7 +180,7 @@ function Home() {
       <section className="sec" id="work">
         <div className="wrap">
           <div className="sec-head reveal">
-            <h2>Selected Work</h2>
+            <ScrollText as="h2">Selected Work</ScrollText>
             <div className="idx">02 — Projects</div>
           </div>
           {PROJECTS.map((p, i) => (
@@ -192,7 +193,7 @@ function Home() {
       <section className="sec" id="now">
         <div className="wrap">
           <div className="sec-head reveal">
-            <h2>Currently</h2>
+            <ScrollText as="h2">Currently</ScrollText>
             <div className="idx">03 — Now</div>
           </div>
           <div className="now">
@@ -211,7 +212,7 @@ function Home() {
       <section className="sec" id="life">
         <div className="wrap">
           <div className="sec-head reveal">
-            <h2>Off the clock</h2>
+            <ScrollText as="h2">Off the clock</ScrollText>
             <div className="idx">04 — Life</div>
           </div>
           <div className="life">
