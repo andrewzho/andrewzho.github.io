@@ -5,6 +5,7 @@ import Experience from "./Experience";
 import pdf from "../../Assets/Resume.pdf";
 import neuroflow from "../../Assets/Projects/neuroflow.jpg";
 import bucketlist from "../../Assets/Projects/bucketlist.jpg";
+import budget from "../../Assets/Projects/budget.png";
 
 const NAME = "Andrew Ho";
 
@@ -14,6 +15,14 @@ const MARQUEE = [
 ];
 
 const PROJECTS = [
+  {
+    title: "Budget Dashboard",
+    desc:
+      "A self-hosted personal finance app — drag-and-drop bank CSV imports, per-account spend analytics, savings goals, recurring-bill tracking, and a tool-using AI assistant for natural-language money questions.",
+    tags: ["FastAPI", "SQLAlchemy", "Claude API", "SQLite"],
+    img: budget,
+    code: "https://github.com/andrewzho/budget-dashboard",
+  },
   {
     title: "NeuroFlow",
     desc:
@@ -69,7 +78,7 @@ function onTiltLeave(e) {
   e.currentTarget.style.transform = "";
 }
 
-function Project({ title, desc, tags, img, code, demo, flip }) {
+function Project({ title, desc, tags, img, code, demo, demoLabel = "Devpost ↗", flip }) {
   return (
     <div className={"proj parallax" + (flip ? " flip" : "")}>
       <div className="pmeta">
@@ -82,7 +91,9 @@ function Project({ title, desc, tags, img, code, demo, flip }) {
         </div>
         <div className="plinks">
           <a href={code} target="_blank" rel="noopener noreferrer">Code ↗</a>
-          <a href={demo} target="_blank" rel="noopener noreferrer">Devpost ↗</a>
+          {demo && (
+            <a href={demo} target="_blank" rel="noopener noreferrer">{demoLabel}</a>
+          )}
         </div>
       </div>
       <div className="frame">
